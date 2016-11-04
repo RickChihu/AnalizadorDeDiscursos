@@ -1,0 +1,212 @@
+#include <cstdlib>
+#include <iostream>
+#include <string.h>
+#include <stdio.h>
+#include <ctype.h>
+#define RESERV 10
+using namespace std;
+struct var{ //var x='0'as int
+ char nombre_var[20];
+ int flag;                   //    [nombre_var][ bandera]
+}variable[10000];
+struct hei{ //var x='0'as int
+ char nombre_var[20];
+ int flag;                   //    [nombre_var][ bandera]
+}important[10];
+int importante[10];
+struct PalabrasChidas{
+	int pos;
+	int inicio;
+	int final;
+	int importancia;
+}palabras[109];
+ char vector[11780],check[20];
+int tamano;
+int main(int argc, char *argv[])
+{
+  //declaramos para acceder a un archivo 
+  //http://www.elfinanciero.com.mx/pages/discurso-de-pena-sobre-corrupcion.html
+  FILE *fichero;//tipo puntero *
+  int i=0,j,flag=0,x;
+  //fopen=al archivo que va abrir "r"=read lecture "w"=write Escritura
+  vector[i]=32; //Empieza con un espacio
+  i++;
+  fichero = fopen("ejemplo.txt", "r");//funcion abrir("El Archivo que voy a sleccionar", el tipo")
+  //while = miestras !=indiferente feof=hasta que sea nullo
+  while(!feof(fichero)){//buscar en arreglo hasta el dato sea nullo en variable fichero 
+        //fputc(fgetc(fichero), stdout);//fput=escribir por caracter fgetc=tomar el caracter de fichero
+		vector[i]=fgetc(fichero);
+		vector[i]=tolower(vector[i]);//May[usculas en minúsculas
+        if(vector[i]>=97 && vector[i]<=122 || vector[i]==32 || vector[i]==10 || vector[i]>=160 && vector[i]<=164 || vector[i]==130   ){
+			//Elimina acentos y signos de puntuación
+			if(vector[i]==10){//Salto de linea en espacio
+			vector[i]=32;}
+			i++;//salto de linea
+		}	
+  }// va a cerrrar el ciclo de while
+  fclose(fichero);//va a cerrar el fichero que abrio
+  //getchar();//es similar a la funcion getch() de conio
+    for(i=0;i<=11780;i++){
+  if(vector[i]==32  && vector[i+2]==32){
+  	vector[i+1]=00;
+  }
+  if(vector[i]==32  && vector[i+3]==32){
+  	vector[i+1]=00;
+  	vector[i+2]=00;
+  	//ELimina espacios
+  	}
+  }
+i=0; //inicializar
+int z=0,y,w,cmp,b;
+while(i<=11780){
+	if(vector[i]==32){
+		i++;
+			while(vector[i]!=32){
+			tamano++;
+			i++;
+			}			
+			for(x=0;x<=tamano;x++){ //Guardar la palabra
+				variable[z].nombre_var[x]=vector[i-tamano+x];	
+			}
+			variable[z].flag++;
+				for(y=0;y<=z-1;y++){ //Comparar la palabra
+					cmp=strcmp(variable[z].nombre_var,variable[y].nombre_var);
+					if(cmp==0){ //Si son iguales
+						variable[y].flag++;
+						variable[z].flag--;
+						for(x=0;x<=10;x++){
+							variable[z].nombre_var[x]=00;
+						}
+						z--;
+					}
+				}
+			tamano=0;
+			z++;
+	}
+}
+y=17;
+int xa=0,ya=0;//Variables para contador de los 10 palabras m[as importantes
+for(z=0;z<=1000;z++){
+	for(x=0;x<=1000;x++){
+		if(variable[x].flag==y){
+			if(variable[x].flag<=18 || variable[x].flag==0 ){
+				if(variable[x].nombre_var[0]!=00 || variable[x].nombre_var[0]!=0 ){
+					//cout<<variable[x].nombre_var<<"\t"<<variable[x].flag<<endl;
+					if(xa<=10){
+						if(variable[x].nombre_var[0]==112&&variable[x].nombre_var[1]==111&&variable[x].nombre_var[2]==114||variable[x].nombre_var[0]==117&&variable[x].nombre_var[1]==110&&variable[x].nombre_var[2]==97||variable[x].nombre_var[1]==111&&variable[x].nombre_var[3]==111||variable[x].nombre_var[0]==100&&variable[x].nombre_var[1]==101&&variable[x].nombre_var[2]==108||variable[x].nombre_var[0]==115&&variable[x].nombre_var[1]==101&&variable[x].nombre_var[2]==114&&variable[x].nombre_var[3]==32||variable[x].nombre_var[0]==101&&variable[x].nombre_var[1]==115&&variable[x].nombre_var[2]==116&&variable[x].nombre_var[3]==101){
+							//Elimina conectivos
+						}	
+						else{
+							importante[xa]=x;
+							xa++;
+						}	
+						}				
+					}
+				}
+			}
+		}
+	if(y>=1)
+	y--;
+	}
+	cout<<endl<<"Las palabras más importantes son:"<<endl<<endl<<"Repeticiones\t\t Palabra"<<endl;
+	for(z=0;z<=10;z++){
+		cout<<"\t"<<variable[importante[z]].flag<<"\t\t\t";//Importante[z] es en que lugar de la estructura est[a la palabra
+		cout<<variable[importante[z]].nombre_var<<endl;	
+	}
+  //Palabras completas
+  i=0;
+  z=0;
+  flag=0;
+  vector[i]=32; //Empieza con un espacio
+  i++;
+  y=0;
+  fichero = fopen("ejemplo.txt", "r");//funcion abrir("El Archivo que voy a sleccionar", el tipo")
+  //while = miestras !=indiferente feof=hasta que sea nullo
+  //Nuevamente donde no se eliminen los signos de puntuaci[on
+  while(!feof(fichero)){//buscar en arreglo hasta el dato sea nullo en variable fichero 
+        //fputc(fgetc(fichero), stdout);//fput=escribir por caracter fgetc=tomar el caracter de fichero
+		vector[i]=fgetc(fichero);
+		vector[i]=tolower(vector[i]);//May[usculas en minúsculas
+        if(vector[i]>=97 && vector[i]<=122 || vector[i]>=48 && vector[i]<=57 || vector[i]==32 || vector[i]==10 || vector[i]>=160 && vector[i]<=164 || vector[i]==44 || vector[i]==46 || vector[i]==58 || vector[i]==59 ){
+			//Elimina acentos 
+			if(vector[i]==10){//Salto de linea en espacio
+			vector[i]=32;}
+			i++;//salto de linea
+		}
+  }// va a cerrrar el ciclo de while
+  fclose(fichero);//va a cerrar el fichero que abrio
+  int flagy=0;
+  int NP=0; //Numero de palabras
+  int p=0,pi=0, pf=0, pim=0;
+  for(i=0;i<=11780;i++){
+    if( vector[i]==44 || vector[i]==46 || vector[i]==58 || vector[i]==59 ){
+    	flag=i;
+    	NP++;
+	}	
+	if(vector[i]==32 && vector[i+1]==105 && vector[i+2] == 110 && vector[i+3]==116 && vector[i+4]==101 && vector[i+5]==114 && vector[i+6]==115  && vector[i+7]!=101/*" inters[e]"*/||vector[i]==32 && vector[i+1]==112&&vector[i+2]==98&&vector[i+3]==108&&vector[i+4]==105&&vector[i+5]==99&&vector[i+6]==97 && vector[i+7]!=115/*" pblica[s]"*/ ||vector[i]==32 && vector[i+1]==99&&vector[i+2]==111&&vector[i+3]==110&&vector[i+4]==102&&vector[i+5]==108&&vector[i+6]==105&&vector[i+7]==99/*&&vector[10]==115/*" conflic??s"*/||vector[i]==32 && vector[i+1]==99&&vector[i+2]==111&&vector[i+3]==114&&vector[i+4]==114&&vector[i+5]==117&&vector[i+6]==112 && vector[i+7]==99/*" corrupc"*/||vector[i]==32 && vector[i+1]==112&&vector[i+2]==98&&vector[i+3]==108&&vector[i+4]==105&&vector[i+5]==99&&vector[i+6]==111 && vector[i+7]==115/*" pblicos"*/||vector[i]==32 && vector[i+1]==116&&vector[i+2]==114&&vector[i+3]==97&&vector[i+4]==110&&vector[i+5]==115&&vector[i+6]==112&&vector[i+11]==99 && vector[i+13]==97/*" transp??????"*/||vector[i]==32 && vector[i+1]==103&&vector[i+2]==111&&vector[i+3]==98&&vector[i+4]==105&&vector[i+5]==101&&vector[i+6]==114 && vector[i+9]!=115/*" gobier??"*/||vector[i]==32 && vector[i+1]==102&&vector[i+2]==117&&vector[i+3]==110&&vector[i+4]==99&&vector[i+5]==105&&vector[i+6]==110 /*&& vector[i+7]==32/*" funcin"*/||vector[i]==32 && vector[i+1]==97&&vector[i+2]==99&&vector[i+3]==99&&vector[i+4]==105&&vector[i+5]==110/*&&vector[i+6]==32/*" accin"*/||vector[i]==32 && vector[i+1]==115&&vector[i+2]==101&&vector[i+3]==114&&vector[i+4]==118&&vector[i+8]==114&&vector[i+9]==101/*&&vector[i+10]==32/*" serv???re?"*/||vector[i]==32 && vector[i+1]==99&&vector[i+2]==111&&vector[i+3]==110&&vector[i+4]==102&&vector[i+5]==108&&vector[i+6]==105/*&&vector[i+10]!=115/*&&vector[i+10]==32/*" confli???[s]"*/){
+	y=flag+2;
+	if(palabras[p].inicio!=flag+2){
+		p++;
+	}
+	if(palabras[p].inicio==0){
+		palabras[p].inicio=flag+2;
+		palabras[p].importancia++;
+	}
+	z++;//Número de frases
+	a:
+		if(flagy==0){
+			y++;
+			if(vector[y]==44 || vector[y]==46 || vector[y]==58 || vector[y]==59){
+				flagy=1;
+			}
+			goto a;
+		}		
+		flagy=0;
+		if(palabras[p].final==y){
+		palabras[p].importancia++;
+		}
+		palabras[p].final=y;
+		palabras[p].pos=NP;	
+	}
+  }
+  int pv=0,porden=0;
+  int TotalImpo=0;
+  //Palabras en orden de importancia
+  for(porden=10;porden>=1;porden--){
+  for(pv=0;pv<=p;pv++){
+  	if(porden==palabras[pv].importancia){
+  	for(i=palabras[pv].inicio;i<=palabras[pv].final;i++){
+  		cout<<vector[i];
+	  }
+	  TotalImpo=palabras[pv].importancia + TotalImpo;
+	  cout<<endl<<"tiene "<<palabras[pv].importancia<<" puntos de importancia"<<endl;
+	  }
+  }
+  }
+  int SumaChido=0;
+  int esposa=0,investiga=0,videgaray=0,patrimonio=0;
+  for(pv=1;pv<=p;pv++){
+  	for(i=palabras[pv].inicio;i<=palabras[pv].final;i++){
+		if(vector[i]==101 && vector[i+1]==115 && vector[i+2] == 112 && vector[i+3]==111 && vector[i+4]==115 && vector[i+5]==97/*"esposa"*/||vector[i]==118 && vector[i+1]==105 &&vector[i+2]==100 &&vector[i+3]==101 &&vector[i+4]==103 &&vector[i+5]==97&&vector[i+6]==114 && vector[i+7]!=97 && vector[i+8]==121/*"Videgaray"*/ ||vector[i]==105 && vector[i+1]==110 && vector[i+2]==118&&vector[i+3]==101&&vector[i+4]==115&&vector[i+5]==116&&vector[i+6]==105&&vector[i+7]==103/*&&vector[i+8]==97&&vector[i+9]==99&&vector[i+10]==105&&vector[i+11]==110*//*"investig-acin-"*/||vector[i]==112 && vector[i+1]==97&&vector[i+2]==116&&vector[i+3]==114&&vector[i+4]==105&&vector[i+5]==109&&vector[i+6]==111 && vector[i+7]==110&&vector[i+8]==105&&vector[i+9]==111/*"patrimonio"*/){
+			if(vector[i]==101 && vector[i+1]==115 && vector[i+2] == 112 && vector[i+3]==111 && vector[i+4]==115 && vector[i+5]==97/*"esposa"*/)
+			esposa++;
+			if(vector[i]==118 && vector[i+1]==105 &&vector[i+2]==100 &&vector[i+3]==101 &&vector[i+4]==103 &&vector[i+5]==97&&vector[i+6]==114 && vector[i+7]!=97 && vector[i+8]==121/*"Videgaray"*/ )
+			videgaray++;
+			if(vector[i]==105 && vector[i+1]==110 && vector[i+2]==118&&vector[i+3]==101&&vector[i+4]==115&&vector[i+5]==116&&vector[i+6]==105&&vector[i+7]==103/*&&vector[i+8]==97&&vector[i+9]==99&&vector[i+10]==105&&vector[i+11]==110*//*"investig-acin-"*/)
+			investiga++;
+			if(vector[i]==112 && vector[i+1]==97&&vector[i+2]==116&&vector[i+3]==114&&vector[i+4]==105&&vector[i+5]==109&&vector[i+6]==111 && vector[i+7]==110&&vector[i+8]==105&&vector[i+9]==111/*"patrimonio"*/)
+			patrimonio++;
+			SumaChido=SumaChido+palabras[pv].importancia;
+		}
+	  }
+	}
+   int orden; //Palabras que salta
+   orden=palabras[1].pos;
+   for(pv=2;pv<=p;pv++){
+  	orden=palabras[pv].pos-orden-1;	  
+  }
+  cout<<endl<<"El discurso tiene "<<SumaChido<<" puntos de importancia sobre "<<TotalImpo<<" y no hay palabras importantes en "<<orden<<" de "<< NP<<" frases."<<endl;
+  cout<<"Ya que menciona investigacion "<<investiga<<" veces, esposa "<<esposa<<" veces, videgaray "<<videgaray<<" veces y patrimonio "<<patrimonio<<" veces."<<endl;
+  system("PAUSE");
+  return EXIT_SUCCESS;
+}
